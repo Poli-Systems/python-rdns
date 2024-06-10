@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address DNS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to IP Address DNS</h1>
+        <p>
+            This domain redirects all subdomains to a specific IP address if an IP is appended to it.
+        </p>
+        <p>
+            For example:
+        </p>
+        <ul>
+            <li><strong>1.2.3.4.polisystems.cloud</strong> is an A record for <strong>1.2.3.4</strong></li>
+            <li><strong>1.2.3.4.reverse.polisystems.cloud</strong> is an A reversed record for <strong>4.3.2.1</strong></li>
+            <li><strong>anysubdomain.1.2.3.4.polisystems.cloud</strong> is an A reversed record for <strong>1.2.3.4</strong></li>
+            <li><strong>anysubdomain.1.2.3.4.reverse.polisystems.cloud</strong> is an A reversed record for <strong>4.3.2.1</strong></li>
+        </ul>
+        <p>
+            You can find the GitHub repository detailing how it works <a href="https://github.com/Poli-Systems/python-rdns/tree/master">here</a>.
+        </p>
+        <p>
+            While not flawless, this code functions effectively and without complications for our reverse PTR records. Feel free to utilize it for services beyond our corporation.
+        </p>
+        <p>
+            We took this idea that was originally created by Sam Stephenson at Basecamp for XIP-DNS and now it was remade in Python by Poli Systems GmbH.
+        </p>
+        <p>
+            To learn more about our hosting company, visit our <a href="https://polisystems.ch" target="_blank">website</a>.
+        </p>
+    </div>
+    <div class="logo-container">
+       <a href="https://polisystems.ch" target="_blank"><img src="https://cdn.polisystems.ch/assets/images/logo/Blue-Text-Logo.png" alt="Poli Systems Logo"></a>
+    </div>
+</body>
+</html>

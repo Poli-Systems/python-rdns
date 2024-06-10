@@ -1,0 +1,14 @@
+[Unit]
+Description=Reverse DNS Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /root/DNS/ReverseDnsServer.py
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=reversednsserver
+
+[Install]
+WantedBy=multi-user.target
