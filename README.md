@@ -11,7 +11,7 @@ This domain redirects all subdomains to a specific IP address if an IP is append
 
 You can find the GitHub repository detailing how it works [here](https://github.com/Poli-Systems/python-rdns/tree/master).
 
-While not flawless, this code functions effectively and without complications for our reverse PTR records. Feel free to utilize it for services beyond our corporation.
+Feel free to utilize it for services beyond our corporation.
 
 We took this idea that was originally created by Sam Stephenson at Basecamp for XIP-DNS and now it was remade in Python by Poli Systems GmbH.
 
