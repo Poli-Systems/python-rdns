@@ -5,23 +5,19 @@ from dnslib import DNSRecord, DNSHeader, RR, QTYPE, A, AAAA, SOA, NS, CAA
 from dnslib.server import DNSServer, BaseResolver
 import re
 import datetime
-import time  # Import the time module
+import time
+import os
 
 # Variables for the domain and IP addresses
 DOMAIN = 'polisystems.cloud'
-IPV4_ADDRESS = '*.*.*.*'  # Replace with your desired IPv4 address
-IPV6_ADDRESS = '*:*:*:*::1'  # Replace with your desired IPv6 address
 
 # SOA record details
-SOA_MNAME = '*.*.*.*'  # Primary master name server
-SOA_RNAME = '*.*.*'  # Responsible party email (replace "@" with ".")
 SOA_REFRESH = 3600  # Refresh interval in seconds
 SOA_RETRY = 1800  # Retry interval in seconds
 SOA_EXPIRE = 1209600  # Expire interval in seconds
 SOA_MINIMUM = 86400  # Minimum TTL in seconds
 
 # NS record details
-NS_SERVERS = ['*.*.*.*', '*.*.*.*']  # List of name servers
 
 # Default TTL for all records (7 days in seconds)
 TTL = 604800
@@ -31,18 +27,33 @@ CAA_FLAGS = 0
 CAA_TAG = 'issue'
 CAA_VALUE = 'letsencrypt.org'
 
+# Path to the stats file
+STATS_FILE = '/root/DNS/stats.txt'
+
 # Global counter for DNS queries
 dns_query_counter = 0
+
+# Function to load the current count from the stats file
+def load_stats():
+    global dns_query_counter
+    if os.path.exists(STATS_FILE):
+        with open(STATS_FILE, 'r') as f:
+            try:
+                dns_query_counter = int(f.read().strip().split(': ')[1])
+            except (IndexError, ValueError):
+                dns_query_counter = 0
+    else:
+        dns_query_counter = 0
+
+# Function to update the stats.txt file
+def update_stats():
+    with open(STATS_FILE, 'w') as f:
+        f.write(f"DNS Queries: {dns_query_counter}\n")
 
 # Function to generate a new serial number based on the current date and time
 def generate_serial():
     now = datetime.datetime.now()
     return int(now.strftime('%Y%m%d%H%M%S'))  # YYYYMMDDHHMMSS format
-
-# Function to update the stats.txt file
-def update_stats():
-    with open('/root/DNS/stats.txt', 'w') as f:
-        f.write(f"DNS Queries: {dns_query_counter}\n")
 
 class CustomResolver(BaseResolver):
     def resolve(self, request, handler):
@@ -97,6 +108,7 @@ class CustomResolver(BaseResolver):
         return reply
 
 if __name__ == '__main__':
+    load_stats()  # Load the current count when the script starts
     resolver = CustomResolver()
     server = DNSServer(resolver, port=53, address='0.0.0.0')
     server.start_thread()
